@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galerie de Pokémon</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+<header>
+  <h1>Galerie de Pokémon</h1>
+</header>
+  
+  <nav>
+    <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="comparaison.html">Comparaison</a></li>
+        <li><a href="all.html">À propos</a></li>
+    </ul>
+</nav>
+  <label for="sort-options">Trier par :</label>
+  <select id="sort-options">
+    <option value="id">ID</option>
+    <option value="hp">HP</option>
+    <option value="attack">Attaque</option>
+    <option value="defense">Défense</option>
+  </select>
+  <div id="pokemon-gallery"></div>
+  <script src="gallery.js"></script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 
+<?php require('bd.php'); ?>
 
 <html lang="fr">
 <head>
@@ -19,7 +20,7 @@
             <li><a href="index.html">Accueil</a></li>
             <li><a href="recherche.html">Recherche</a></li>
             <li><a href="comparaison.html">Comparaison</a></li>
-            <li><a href="all.html">À propos</a></li>
+            <li><a href="apropos.html">À propos</a></li>
         </ul>
     </nav>
 
@@ -36,6 +37,7 @@
                 <li><a href="recherche.html">Recherche de Pokémon</a></li>
                 <li><a href="comparaison.html">Comparaison de Pokémon</a></li>
             </ul>
+            
         </section>
     </main>
     
@@ -43,4 +45,5 @@
         <p>&copy; 2023 PokéStats. Tous droits réservés.</p>
         <p><a href="contact.html">Contact</a> | <a href="mentionslegales.html">Mentions légales</a></p>
     </footer>
+    <?php  echo getAllPokemon() ; ?>
     
