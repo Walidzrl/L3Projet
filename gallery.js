@@ -1,9 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const typeForm = document.getElementById("type-form");
+    const type1Select = document.getElementById("type1-select");
+    const type2Select = document.getElementById("type2-select");
+  
+    typeForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+  
+      const type1 = type1Select.value;
+      const type2 = type2Select.value;
+  
+      filterPokemonsByType(type1, type2);
+    });
+  
     async function fetchPokemons() {
       try {
         const response = await fetch("bd.php");
         const pokemons = await response.json();
-        displayPokemons(pokemons);
+        return pokemons;
       } catch (error) {
         console.error("Erreur lors de la récupération des Pokémon :", error);
       }
@@ -37,32 +50,48 @@ document.addEventListener("DOMContentLoaded", function () {
   
       pokemonGallery.innerHTML = html;
     }
-    function sortPokemons(pokemons, sortBy) {
-        return pokemons.sort((a, b) => {
-          return parseInt(b[sortBy]) - parseInt(a[sortBy]);
+  
+    function filterPokemonsByType(type1, type2) {
+      fetchPokemons().then((pokemons) => {
+        const filteredPokemons = pokemons.filter((pokemon) => {
+          return (
+            (type1 === "" || pokemon.type1 === type1) &&
+            (type2 === "" || pokemon.type2 === type2)
+          );
         });
-      }
+  
+        displayPokemons(filteredPokemons);
+      });
+    }
+  
+    function sortPokemons(pokemons, sortBy) {
+      return pokemons.sort((a, b) => {
+        return parseInt(b[sortBy]) - parseInt(a[sortBy]);
+      });
+    }
   
     function normalizeName(name) {
       return name.toLowerCase().replace(/[^a-z0-9]/g, "");
     }
   
-    fetchPokemons();
-
-    // Ajoutez un écouteur d'événements pour le bouton "Trier par HP"
+    // Affiche les pokemons au chargement de la page
+    fetchPokemons().then((pokemons) => {
+      displayPokemons(pokemons);
+    });
+  
+    // Ajoutez un écouteur d'événements pour le menu déroulant "Trier par"
     const sortOptions = document.getElementById("sort-options");
     sortOptions.addEventListener("change", async function () {
       const sortBy = sortOptions.value;
-      const response = await fetch("bd.php");
-      const pokemons = await response.json();
+      const pokemons = await fetchPokemons();
   
-      if (pokemons.error) {
-        console.error("Erreur lors de la récupération des Pokémon :", pokemons.error);
+      if (!pokemons) {
+        console.error("Erreur lors de la récupération des Pokémon");
       } else {
         const sortedPokemons = sortPokemons(pokemons, sortBy);
         displayPokemons(sortedPokemons);
-    }
-  });
+      }
+    });
 });
-  
+
   

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galerie de Pokémon</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+<header>
+  <h1>Galerie de Pokémon</h1>
+</header>
+  
+  <nav>
+    <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="recherche.html">Recherche</a></li>
+        <li><a href="comparaison.html">Comparaison</a></li>
+        <li><a href="catalogue.html">Catalogue</a></li>
+    </ul>
+</nav>
+  <label for="sort-options">Trier par :</label>
+  <select id="sort-options">
+    <option value="id">ID</option>
+    <option value="hp">HP</option>
+    <option value="attack">Attaque</option>
+    <option value="defense">Défense</option>
+  </select>
+  <form id="type-form">
+    <label for="type1-select">Type 1:</label>
+    <select id="type1-select" name="type1">
+      <option value="">Tous</option>
+      <option value="Grass">Grass</option>
+      <option value="Fire">Fire</option>
+      <option value="Water">Water</option>
+      <option value="Bug">Bug</option>
+      <option value="Normal">Normal</option>
+      <option value="Poison">Poison</option>
+      <option value="Electric">Electric</option>
+      <option value="Ground">Ground</option>
+      <option value="Fairy">Fairy</option>
+      <option value="Fighting">Fighting</option>
+      <option value="Psychic">Psychic</option>
+      <option value="Rock">Rock</option>
+      <option value="Ghost">Ghost</option>
+      <option value="Ice">Ice</option>
+      <option value="Dragon">Dragon</option>
+      <option value="Dark">Dark</option>
+      <option value="Steel">Steel</option>
+      <option value="Flying">Flying</option>
+      <!-- Ajoutez d'autres options pour les types ici -->
+    </select>
+  
+    <label for="type2-select">Type 2:</label>
+    <select id="type2-select" name="type2">
+      <option value="">Tous</option>
+      <option value="Grass">Grass</option>
+      <option value="Fire">Fire</option>
+      <option value="Water">Water</option>
+      <option value="Bug">Bug</option>
+      <option value="Normal">Normal</option>
+      <option value="Poison">Poison</option>
+      <option value="Electric">Electric</option>
+      <option value="Ground">Ground</option>
+      <option value="Fairy">Fairy</option>
+      <option value="Fighting">Fighting</option>
+      <option value="Psychic">Psychic</option>
+      <option value="Rock">Rock</option>
+      <option value="Ghost">Ghost</option>
+      <option value="Ice">Ice</option>
+      <option value="Dragon">Dragon</option>
+      <option value="Dark">Dark</option>
+      <option value="Steel">Steel</option>
+      <option value="Flying">Flying</option>
+      <!-- Ajoutez d'autres options pour les types ici -->
+    </select>
+  
+    <button type="submit">Filtrer</button>
+  </form>
+  <div id="pokemon-gallery"></div>
+  <script src="gallery.js"></script>
+</body>
+</html>
