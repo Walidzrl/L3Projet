@@ -15,18 +15,11 @@
   <nav>
     <ul>
         <li><a href="index.html">Accueil</a></li>
-        <li><a href="recherche.html">Recherche</a></li>
-        <li><a href="comparaison.html">Comparaison</a></li>
         <li><a href="catalogue.html">Catalogue</a></li>
     </ul>
 </nav>
-  <label for="sort-options">Trier par :</label>
-  <select id="sort-options">
-    <option value="id">ID</option>
-    <option value="hp">HP</option>
-    <option value="attack">Attaque</option>
-    <option value="defense">Défense</option>
-  </select>
+
+
   <form id="type-form">
     <label for="type1-select">Type 1:</label>
     <select id="type1-select" name="type1">
@@ -75,9 +68,20 @@
       <option value="Flying">Flying</option>
       <!-- Ajoutez d'autres options pour les types ici -->
     </select>
-  
-    <button type="submit">Filtrer</button>
+  <label for="legendary-filter">Légendaire:</label>
+  <input type="checkbox" id="legendary-filter" name="legendary-filter">
+
+  <label for="generation-select">Génération :</label>
+  <select id="generation-select">
+    <option value="">Toutes</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
   </form>
+
   <div id="pokemon-gallery"></div>
   <script src="gallery.js"></script>
 </body>
