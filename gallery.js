@@ -4,10 +4,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const type2Select = document.getElementById("type2-select");
   const legendaryFilter = document.getElementById("legendary-filter");
   const generationSelect = document.getElementById("generation-select");
+  const nameFilter = document.getElementById("name-filter");
 
-  typeForm.addEventListener("change", applyFilters);
+
+
+
+  type1Select.addEventListener("change", applyFilters);
+  type2Select.addEventListener("change", applyFilters);
   legendaryFilter.addEventListener("change", applyFilters);
   generationSelect.addEventListener("change", applyFilters);
+  nameFilter.addEventListener("input", applyFilters);
 
   async function fetchPokemons() {
       try {
@@ -49,21 +55,43 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function applyFilters() {
-      const type1 = type1Select.value;
-      const type2 = type2Select.value;
-      const legendary = legendaryFilter.checked;
-      const generation = generationSelect.value;
+    const type1 = type1Select.value;
+    const type2 = type2Select.value;
+    const legendary = legendaryFilter.checked;
+    const generation = generationSelect.value;
+    const nameSearch = nameFilter.value.toLowerCase();
 
-      const pokemons = await fetchPokemons();
 
-      const filteredPokemons = pokemons.filter((pokemon) => {
-          return (
-              (type1 === "" || pokemon.type1 === type1) &&
-              (type2 === "" || pokemon.type2 === type2) &&
-              (!legendary || pokemon.legendary === "True") &&
-              (generation === "" || parseInt(pokemon.generation) === parseInt(generation))
-          );
-      });
+
+    const pokemons = await fetchPokemons();
+
+    const filteredPokemons = pokemons.filter((pokemon) => {
+      const isNameMatch = pokemon.name.toLowerCase().includes(nameSearch);
+      return (
+        isNameMatch &&
+        (type1 === "" || pokemon.type1 === type1) &&
+        (type2 === "" || pokemon.type2 === type2) &&
+        (!legendary || pokemon.legendary === "True") &&
+        (generation === "" || parseInt(pokemon.generation) === parseInt(generation))
+      );
+    });
+
+    filteredPokemons.sort((a, b) => {
+    if (nameSearch) {
+      const aStartsWith = a.name.toLowerCase().startsWith(nameSearch);
+      const bStartsWith = b.name.toLowerCase().startsWith(nameSearch);
+
+      if (aStartsWith && !bStartsWith) {
+        return -1;
+      } else if (!aStartsWith && bStartsWith) {
+        return 1;
+      } else {
+        return a.name.localeCompare(b.name);
+      }
+    } else {
+      return a.id - b.id;
+    }
+  });
 
       displayPokemons(filteredPokemons);
   }
