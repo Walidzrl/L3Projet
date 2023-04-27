@@ -6,14 +6,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const generationSelect = document.getElementById("generation-select");
   const nameFilter = document.getElementById("name-filter");
 
-
-
-
   type1Select.addEventListener("change", applyFilters);
   type2Select.addEventListener("change", applyFilters);
   legendaryFilter.addEventListener("change", applyFilters);
   generationSelect.addEventListener("change", applyFilters);
   nameFilter.addEventListener("input", applyFilters);
+
+  const selectedPokemonIds = [];
 
   async function fetchPokemons() {
       try {
@@ -35,23 +34,16 @@ document.addEventListener("DOMContentLoaded", function () {
           <div class="card">
           <h3>${pokemon.name}</h3>
           <img src="images/${normalizedName}.png" alt="${pokemon.name}" />
-          <p>ID: ${pokemon.id}</p>
-          <p>Type 1: ${pokemon.type1}</p>
-          <p>Type 2: ${pokemon.type2}</p>
-          <p>Total: ${pokemon.total}</p>
-          <p>HP: ${pokemon.hp}</p>
-          <p>Attaque: ${pokemon.attack}</p>
-          <p>Défense: ${pokemon.defense}</p>
-          <p>Attaque spéciale: ${pokemon.sp_atck}</p>
-          <p>Défense spéciale: ${pokemon.sp_def}</p>
-          <p>Vitesse: ${pokemon.speed}</p>
-          <p>Génération: ${pokemon.generation}</p>
-          <p>Légendaire: ${pokemon.legendary === "True" ? "Oui" : "Non"}</p>
+          <p><img src="images/${pokemon.type1}.png" alt="${pokemon.type1}" /> </p>
+          <p><img src="images/${pokemon.type2}.png" alt="${pokemon.type2}" /> </p>
+          
+          <button data-pokemon-id="${pokemon.id}" class="select-pokemon-btn">Sélectionner</button>
         </div>
           `;
       });
 
       pokemonGallery.innerHTML = html;
+      addSelectPokemonListeners();
   }
 
   async function applyFilters() {
@@ -60,8 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const legendary = legendaryFilter.checked;
     const generation = generationSelect.value;
     const nameSearch = nameFilter.value.toLowerCase();
-
-
 
     const pokemons = await fetchPokemons();
 
@@ -77,31 +67,52 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     filteredPokemons.sort((a, b) => {
-    if (nameSearch) {
-      const aStartsWith = a.name.toLowerCase().startsWith(nameSearch);
-      const bStartsWith = b.name.toLowerCase().startsWith(nameSearch);
+      if (nameSearch) {
+        const aStartsWith = a.name.toLowerCase().startsWith(nameSearch);
+        const bStartsWith = b.name.toLowerCase().startsWith(nameSearch);
 
-      if (aStartsWith && !bStartsWith) {
-        return -1;
-      } else if (!aStartsWith && bStartsWith) {
-        return 1;
+        if (aStartsWith && !bStartsWith) {
+          return -1;
+        } else if (!aStartsWith && bStartsWith) {
+          return 1;
+        } else {
+          return a.name.localeCompare(b.name);
+        }
       } else {
-        return a.name.localeCompare(b.name);
+        return a.id - b.id;
       }
-    } else {
-      return a.id - b.id;
+    });
+    
+    displayPokemons(filteredPokemons);}
+
+    function normalizeName(name) {
+    return name.toLowerCase().replace(/[^a-z0-9]/g, "");
     }
-  });
-
-      displayPokemons(filteredPokemons);
-  }
-
-  function normalizeName(name) {
-      return name.toLowerCase().replace(/[^a-z0-9]/g, "");
+    
+    function addSelectPokemonListeners() {
+    const selectPokemonBtns = document.querySelectorAll(".select-pokemon-btn");
+    selectPokemonBtns.forEach((btn) => {
+    btn.addEventListener("click", function () {
+    const pokemonId = this.dataset.pokemonId;
+    togglePokemonSelection(pokemonId);
+    });
+    });
+    }
+    
+    function togglePokemonSelection(pokemonId) {
+    const index = selectedPokemonIds.indexOf(pokemonId);
+    if (index >= 0) {
+    selectedPokemonIds.splice(index, 1);
+    } else {
+    selectedPokemonIds.push(pokemonId);
+    }if (selectedPokemonIds.length === 2) {
+      window.location.href = `compare.php?id1=${selectedPokemonIds[0]}&id2=${selectedPokemonIds[1]}`;
+    }
   }
 
   // Affiche les pokemons au chargement de la page
   fetchPokemons().then((pokemons) => {
-      displayPokemons(pokemons);
+  displayPokemons(pokemons);
   });
 });
+      
