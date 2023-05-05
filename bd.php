@@ -70,5 +70,5 @@ function getPokemonById($id) {
       return null;
     }
   }
-  
 ?>
+

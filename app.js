@@ -1,15 +1,27 @@
 // Affiche l'image du Pokémon en fonction de son nom
-function setImage(pokemon, imgElementId) {
-    const imgElement = document.getElementById(imgElementId);
-    if (pokemon) {
-      const normalizedName = pokemon.name.toLowerCase().replace(/[^a-z0-9]+/g, '');
-      imgElement.src = `images/${normalizedName}.png`;
-      imgElement.alt = pokemon.name;
-    } else {
-      imgElement.src = 'images/default.png';
-      imgElement.alt = 'Default Pokémon';
-    }
+function setImage(pokemon, imgElementId, infoElementId) {
+  const imgElement = document.getElementById(imgElementId);
+  const infoElement = document.getElementById(infoElementId);
+
+  if (pokemon) {
+    const normalizedName = pokemon.name.toLowerCase().replace(/[^a-z0-9]+/g, '');
+    imgElement.src = `images/${normalizedName}.png`;
+    imgElement.alt = pokemon.name;
+
+    // Ajoute le nom et les informations du Pokémon
+    const pokemonInfoHtml = `
+      <h3>${pokemon.name}</h3>
+      <p><img src="images/${pokemon.type1}.png" alt="${pokemon.type1}" /></p>
+      <p><img src="images/${pokemon.type2}.png" alt="${pokemon.type2}" /></p>
+    `;
+
+    infoElement.innerHTML = pokemonInfoHtml;
+  } else {
+    imgElement.src = 'images/default.png';
+    imgElement.alt = 'Default Pokémon';
   }
+}
+
   
   // Affiche le graphique de comparaison des statistiques des Pokémon
   function displayComparisonChart() {
@@ -20,8 +32,8 @@ function setImage(pokemon, imgElementId) {
     }
   
     // Appelle la fonction setImage pour chaque Pokémon
-    setImage(pokemon1, 'pokemon1-img');
-    setImage(pokemon2, 'pokemon2-img');
+  setImage(pokemon1, 'pokemon1-img', 'pokemon1-info');
+  setImage(pokemon2, 'pokemon2-img', 'pokemon2-info');
   
     // Crée des tableaux avec les statistiques de chaque Pokémon
     const pokemon1Stats = [
@@ -119,11 +131,51 @@ function setImage(pokemon, imgElementId) {
     const ctx = document.getElementById(chartElementId).getContext("2d");
     new Chart(ctx, config);
   }
+
+  function displayTotalComparisonChart() {
+    if (!pokemon1 || !pokemon2) {
+      console.error("Erreur lors de la récupération des données des Pokémon");
+      return;
+    }
+  
+    const totalPokemon1 = pokemon1.total; // Utilisez le total du Pokémon 1
+    const totalPokemon2 = pokemon2.total; // Utilisez le total du Pokémon 2
+  
+    const data = {
+      labels: [pokemon1.name, pokemon2.name],
+      datasets: [
+        {
+          label: "Total",
+          data: [totalPokemon1, totalPokemon2],
+          backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
+          borderColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
+          borderWidth: 1,
+        },
+      ],
+    };
+  
+    const config = {
+      type: "bar",
+      data: data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    };
+  
+    const ctx = document.getElementById("totalComparisonChart").getContext("2d");
+    const myChart = new Chart(ctx, config);
+  }
+  
   
   // Affiche les graphiques pour les Pokémon récupérés à partir du code PHP
   displayDonutChart(pokemon1, "pokemon1-donut-chart");
   displayDonutChart(pokemon2, "pokemon2-donut-chart");
   displayComparisonChart();
+  displayTotalComparisonChart();
 
   
   

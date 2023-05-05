@@ -5,9 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galerie de Pokémon</title>
     <link rel="stylesheet" href="style.css">
-    <script src="gallery.js" defer></script> <!-- Ajoutez l'attribut defer ici -->
+    <script src="gallery.js" defer></script> <!-- L'utilisation de l'attribut "defer" permet d'améliorer les performances en accélérant le temps de chargement de la page. En effet, cela permet d'éviter que le navigateur bloque le chargement des autres éléments de la page en attendant que le script soit entièrement téléchargé et exécuté. -->
   </head>
 <body>
+  <script>
+    function changeButtonColor(button) {
+      // Remplacez 'blue' par la couleur souhaitée
+      const selectedColor = 'blue';
+  
+      // Vérifiez si la couleur actuelle du bouton est égale à la couleur sélectionnée
+      if (button.style.backgroundColor === selectedColor) {
+        // Si oui, réinitialisez la couleur d'arrière-plan du bouton
+        button.style.backgroundColor = '';
+      } else {
+        // Sinon, changez la couleur d'arrière-plan en la couleur sélectionnée
+        button.style.backgroundColor = selectedColor;
+      }
+    }
+  </script>
+  
   
 <header>
   <h1>Galerie de Pokémon</h1>
@@ -44,7 +60,7 @@
       <option value="Dark">Dark</option>
       <option value="Steel">Steel</option>
       <option value="Flying">Flying</option>
-      <!-- Ajoutez d'autres options pour les types ici -->
+      
       </select>
   
       <label for="type2-select">Type 2:</label>
@@ -68,7 +84,7 @@
         <option value="Dark">Dark</option>
         <option value="Steel">Steel</option>
         <option value="Flying">Flying</option>
-        <!-- Ajoutez d'autres options pour les types ici -->
+        
       </select>
 
     <label for="legendary-filter">Légendaire:</label>

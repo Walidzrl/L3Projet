@@ -6,6 +6,7 @@
 }
 
 body {
+    text-align: center;
     font-family: Arial, sans-serif;
     line-height: 1.6;
     background-color: #f2f2f2;
@@ -87,7 +88,9 @@ main p {
     color: #ffffff;
     text-align: center;
     padding: 1rem;
-    margin-top: 1rem;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
     }
     
     footer a {

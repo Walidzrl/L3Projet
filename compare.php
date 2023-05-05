@@ -27,6 +27,7 @@
             
             
             <img id="pokemon1-img" src="images/default.png" alt="Pokémon 1" />
+            <div id="pokemon1-info"></div>
             <canvas id="pokemon1-donut-chart"></canvas>
             
             
@@ -35,21 +36,20 @@
   
     <div class="box 2">
     <canvas id="pokemon-stats-chart" width="500" height="500"></canvas>
+    <canvas id="totalComparisonChart"></canvas>
+    
     </div>
 
     <div class="box 3">
           <div class="card">
-            <h1></h1>
+            
             <img id="pokemon2-img" src="images/default.png" alt="Pokémon 2" />
+            <div id="pokemon2-info"></div>
             <canvas id="pokemon2-donut-chart"></canvas>
             
             
           </div>
       </div>
-
-
-  
-      
 
 <script>
   const pokemon1 = <?php echo $pokemon1Json; ?>;
